@@ -1,6 +1,8 @@
 package edu.dmacc.dsmcode.coma510.exercises;
 
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
@@ -28,6 +30,18 @@ public class FunctionMain {
 
         // Alternatively do it all in one line!
         agesByName.forEach((String name, Integer age) -> System.out.println(name + " is " + age));
+
+
+//        Change your code to use the Map's enrtySet().stream() method
+//        Filter out all people less than 25
+//        Sort the names by age
+//        Use the terminal operator forEach to print the name and age like before
+        System.out.println("\nFiltering and Sorting:");
+        agesByName.entrySet().stream()
+                .filter(person -> person.getValue() >= 25)
+//                .sorted((personA, personB) -> Integer.compare(personA.getValue(), personB.getValue()))
+                .sorted(Comparator.comparingInt(Map.Entry::getValue)) // FunctionalInterface suggested by IntelliJ
+                .forEach(person -> formatAndPrint.accept(person.getKey(), person.getValue()));
     }
 
     public static void printEachPerson(
