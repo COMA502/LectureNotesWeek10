@@ -1,6 +1,7 @@
 package edu.dmacc.dsmcode.coma510.exercises;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,8 +13,8 @@ public class HigherOrderFunctionsMain {
      */
     public static void main(String[] args) {
         HashMap<String, List<Integer>> gradesByClass = new HashMap<>();
-        gradesByClass.put("Morning Class", Arrays.asList(99, 70, 81));
-        gradesByClass.put("Evening Class", Arrays.asList(95, 91, 74));
+//        gradesByClass.put("Morning Class", Arrays.asList(99, 70, 81));
+//        gradesByClass.put("Evening Class", Arrays.asList(95, 91, 74));
 
         List<Integer> grades = gradesByClass.entrySet().stream()
                 .flatMap(classAndGrades -> classAndGrades.getValue().stream())
@@ -21,7 +22,14 @@ public class HigherOrderFunctionsMain {
                 .collect(Collectors.toList());
         System.out.println(grades);
 
-        Integer sum = grades.stream().reduce(0, (grade, total) -> total + grade);
-        System.out.println("Average grade: " + (sum / grades.size()));
+        if(!grades.isEmpty()) {
+            Integer sum = grades.stream().reduce(0, (grade, total) -> total + grade);
+            System.out.println("Average grade: " + (sum / grades.size()));
+        }
+
+        System.out.println("Max Grade: "
+                + grades.stream().max(Comparator.naturalOrder()).orElse(100));
+        System.out.println("Min Grade: "
+                + grades.stream().min(Comparator.naturalOrder()).orElse(0));
     }
 }
